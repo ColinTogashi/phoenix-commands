@@ -1,0 +1,44 @@
+#!/bin/bash
+
+script_name=$(basename "$0")
+short=cbh
+long=commit,branch,help
+
+
+TEMP=$(getopt -o $short --long $long --name "$script_name" -- "$@")
+
+USAGE="asdfd"
+COMMIT="build
+chore
+ci
+docs
+dependency
+feat
+fix
+perf
+proto
+refactor
+revert
+style
+test
+wip"
+BRANCH="bugfix
+feature
+release
+hotfix
+task
+chore
+prototype"
+
+eval set -- "${TEMP}"
+
+while :; do
+    case "${1}" in
+        -c | --commit     ) echo "${COMMIT}" 1>&2;   exit ;;
+        # -c | --commit     ) start_time=$2;       shift 2 ;;
+        -b | --branch     ) echo "${BRANCH}" 1>&2;   exit ;;
+        -h | --help       ) echo "${USAGE}" 1>&2;   exit ;;
+        --                ) shift;                 break ;;
+        *                 ) echo "Error parsing"; exit 1 ;;
+    esac
+done

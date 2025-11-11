@@ -1,0 +1,10 @@
+#!/bin/bash
+if ! [ "$(docker ps -aq)" ]; then
+    echo "No docker containers to clean"; exit;
+fi
+sudo docker rm "$(docker ps -aq)"
+
+if ! [ "$(docker images -f "dangling=true" -q)" ]; then
+    echo "No loose images to clean"; exit;
+fi
+sudo docker rmi "$(docker images -f "dangling=true" -q)"
